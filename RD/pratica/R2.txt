@@ -1,0 +1,29 @@
+hostname R2
+!
+!
+!
+interface FastEthernet0/0
+ip address 10.1.0.1 255.255.0.0
+duplex auto
+speed auto
+no shutdown
+!
+interface Serial0/0/0
+ip address 209.165.200.229 255.255.255.252
+no shutdown
+!
+interface Serial0/0/1
+ip address 209.165.200.233 255.255.255.252
+clock rate 64000
+no shutdown
+!
+router rip
+passive-interface FastEthernet0/0
+network 10.0.0.0
+network 209.165.200.0
+!
+line con 0
+line vty 0 4
+login
+!
+end

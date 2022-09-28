@@ -1,0 +1,34 @@
+#1# VLAN's conf. (ROUTER-ON-A-STICK):
+
+	switch1: 
+	$sh vlan
+	$int fa0/1(2) --> switchport mode access --> switchport access vlan 10(20)
+
+	todos os switch:
+	$vlan 10(20) --> name REDE-A(B)
+	$int gi0/1(etc) --> switchport mode trunk
+	
+	router: 
+	int fa0/1.10 --> enc dot1q 10 --> ip address 192.168.10.254 --> no shut --> exit
+	
+	##fazer o mesmo para a 20(REDE-B)##
+
+	switch4: 
+	int fa0/2 --> switchport mode trunk
+
+
+
+#2# SWITCHING LAYER 3 conf. a comunicar com o exterior:
+	
+	-criar as VLAN's 
+	-fazer ip routing
+	-conf. gi0/1 --> trunk
+	-conf. as int. das VLAN's com o IP e a MASC
+	
+
+
+#3# SYSLOG para servidor:
+	
+	-criar uma VLAN de management (99) e colocar em todos os switch como native
+	-atribiur um IP ao server (10.10.10.100)
+	-fazer o logging nos switch com o IP do servidor

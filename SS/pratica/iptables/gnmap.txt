@@ -1,0 +1,2 @@
+# Nmap 7.70 scan initiated Fri Nov  8 09:25:40 2019 as: nmap -PO -p80 -oG gnmap.txt 192.168.226.0/24
+# Nmap done at Fri Nov  8 09:26:48 2019 -- 256 IP addresses (0 hosts up) scanned in 68.48 seconds

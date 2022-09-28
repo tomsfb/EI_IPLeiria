@@ -1,0 +1,19 @@
+1. What are the 6 characteristics needed in a secure hash function?
+Variable input size
+Fixed output size
+Efficiency
+Preimage resistant
+Second Preimage resistant
+Collision resistant
+Pseudorandomness (optional)
+
+2. What is the difference between weak and strong collision resistance?
+PREIMAGE 2^M FRACA
+Collision 2^(M/2) FORTE
+
+3. Why it is required to protect the hash value?
+Para proteger das alterações dos valores
+
+4. In what ways can a hash value be secured so as to provide message
+authentication?
+cifrar o valor de hash com (3 ways)

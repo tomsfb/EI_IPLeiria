@@ -1,0 +1,21 @@
+Review Questions
+
+1. Describe the main requirements for the secure use of symmetric encryption.
+
+2. What are the two basic operations used in encryption algorithms?
+
+3. Differentiate between secret-key encryption and public-key encryption.
+
+4. What is the difference between a block cipher and a stream cipher?
+
+5. What is a computationally secure cipher?
+
+6. Why is the Caesar cipher substitution technique vulnerable to a brute-force cryptanalysis?
+
+7. How much key space is available when a monoalphabetic substitution cipher is used to replace plaintext with ciphertext?
+
+8. What is the difference between a monoalphabetic cipher and a polyalphabetic cipher?
+
+9. What is a transposition cipher?
+
+10. What type of operation is performed by the rotor machines?

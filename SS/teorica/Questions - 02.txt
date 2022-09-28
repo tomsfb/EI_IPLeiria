@@ -1,0 +1,17 @@
+02 - Review Questions
+
+1. What is cryptography?
+
+2. Cryptographic algorithms can be characterized into three independent dimensions, explain them.
+
+3. What are the three families that cryptographic algorithms can be divided into?
+
+4. What is the difference between cryptanalysis and brute-force?
+
+5. What characteristics define a computational secure cryptographic algorithm?
+
+6. What are the 2 main problems of symmetric ciphers that asymmetric ciphers solve?
+
+7. Are hash algorithms reversible?
+
+8. Can an hash algorithm produce the same hash value for 2 different messages?

@@ -1,0 +1,33 @@
+hostname R3
+!
+!
+!
+interface FastEthernet0/0
+ip address 172.30.100.1 255.255.255.0
+duplex auto
+speed auto
+no shutdown
+!
+interface Serial0/0/1
+ip address 209.165.200.234 255.255.255.252
+no shutdown
+!
+interface Loopback0
+ip address 172.30.110.1 255.255.255.0
+!
+interface Loopback1
+ip address 172.30.200.17 255.255.255.240
+!
+interface Loopback2
+ip address 172.30.200.33 255.255.255.240
+!
+router rip
+passive-interface FastEthernet0/0
+network 172.30.0.0
+network 209.165.200.0
+!
+line con 0
+line vty 0 4
+login
+!
+end

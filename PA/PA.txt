@@ -1,0 +1,407 @@
+-------------
+  PROCESSES
+-------------
+
+/proc keeps data regarding a process, each process has a directory with its PID as the dir. name
+
+/proc/stat keeps stats regarding the OS
+
+
+PCB - PROGRAM CONTROL BLOCK
+---------------------------
+
+Keeps data regarding a process, allows a process to be stopped and resumed at any given point
+
+----------------
+| text segment | -> programs code/instructions
+----------------
+| data segment | -> .data -> global and static variables initialized and != 0
+|              |    .bss  -> global and static variables not initialized
+----------------
+| heap segment | -> used for dynamic memory
+----------------
+| stack segment| -> stores local variables
+----------------
+
+
+EXECUTABLE FILE
+---------------
+
+BSS - stores global and static variables initialized with 0
+    - doesnt take space in the executable
+
+DATA - static and global variables initialized with a non 0 value
+
+
+PROCESSES IN UNIX
+-----------------
+
+When fork() is executed, the son process is exactly equal to the parent process
+
+Returns [pid_t fork(void);]:
+
+0 if it is the son process
+
+>0 if it is the parent process
+
+<0 if an error ocurred (errno is automatically set)
+
+
+Despite both the parent process and the son being exactly the same memory ISN'T shared.
+
+
+COPY-ON-WRITE
+-------------
+
+In the beggining there is no memory duplication because the father and son are the same and no variables where changed, the shared pages are marked as readonly.
+
+When one of the processes tries to change a value on a page that page is cuplicated and each process has their own page (other pages are still shared).
+
+
+PROCESSES' IDs
+--------------
+PID is an integer(16 bit signed integer).
+If the last process ID is 122 next PID will be 123 and so on...
+
+
+
+EXEC
+----
+For a new application to run we have to call exec(), exec will replace the image of the forked process with another executable.
+
+Example: execl("/bin/ps","ps","aux",NULL); (has to be NULL terminated)
+
+
+WAIT
+----
+To synchronize parent process and its child porcesses use wait() or waitpid()
+
+
+ZOMBIE PROCESS
+--------------
+Child terminates but no wait() or waitpid() was made by the parent process to that child so it becomes a zombie process.
+
+Zombie processes will be kept in the kernel process table until the parent is terminated, after that, init (zombie process' parent) will wait() for all the parent's children and remove them.
+
+
+SYSTEM()
+--------
+The system function launches a shell that executes a command, high cost since it has to fork() and exec() to substitute the current process image.
+
+
+CPU AFFINITY
+------------
+On a multicore system, if a process is running on a specific CPU core it should remain there, or the "cold cache" effect will take place, the new CPU core's cache has no content/information/data about this new process.
+
+
+EXIT
+----
+Reasons a program ends:
+-User ending the process kill -9 pid
+-No memory
+-Invalid instruction (Dividing by 0)
+-CPU time limit exceeded
+...
+
+void exit(int status) returns "status" to the OS
+
+Other functions can be called before terminating a process, those functions are registered in atexit and on_exit
+
+To terminate a process without calling functions registered in atexit or on_exit use _exit()
+
+ULIMIT
+------
+Lists all limits of a process
+
+
+---------
+ THREADS
+---------
+
+PROCESSES AND THERADS
+---------------------
+When a process ends all of its threads terminate.
+A thread is the basic unit to which the OS allocates CPU time.
+
+
+STRACE AND LTRACE
+-----------------
+strace - shows system calls of a process
+
+ltrace - shows calls to dynamic libraries
+
+
+VIRTUALIZATION
+--------------
+Each process, despite how many run are currently running in the cpu, think the cpu is solely his
+
+Each thread has access to the main process virtualized memory space
+
+
+MULTI-THREADING
+---------------
+
+Dividing work, if there is a problem that can be divided into simpler problems which don't require each other's result but only at the end, each division can run on a thread, makes the problem faster to solve.
+
+In a program waiting for user input, if this process ins't multithreaded, it will appear frozen because it has to wait for user input, threads solve this problem, one thread continues working while the other waits for user input.
+
+Switching threads in a cpu is "cheaper" than switching processes beacuse thread's memory is the same has the main process memory.
+
+SHARED
+------
+Threads share:
+    -Text Segment
+    -Address Space
+    -Data Segment(ex: global variables)
+    -Files,Signal Handlers
+
+But don't share:
+    -Program Counter
+    -Registers
+    -Stack Segment
+
+
+--------
+|OPENMP|
+--------
+
+Provide easy to do multithreading.
+Code to be "multithreaded" is annoted with "#pragma"
+
+FORK-JOIN MODEL
+---------------
+
+Program has a "Master Thread", program runs single threaded until the multithreaded region starts,  then it forks into various threads and then joins them until they all finish
+
+
+-----------------
+ SYNCHRONAZATION
+-----------------
+
+In case 2 threads want access to the same memory address and no mutex or condition variable is set a race condition will happen, there is a possibility that this race condition wont affect the final value if the, for example , increment of a variable is completely done by one thread and then by the other.
+
+Thread-Safe function -> Function that can be called by all threads simultaneously, if the function writes to a shared variable the threads have to write to it one at a time.
+
+Reentrant Function-> Function that can be called simultaneously, each instance of the function doesnt use shared data, only local variables.
+
+
+DEADLOCK LIVELOCK AND STARVATION
+--------------------------------
+Deadlock -> when a process which has a blocked resource is waiting for another locked resource another process has, and that process is waiting for the the locked resource the first process has, neither process A or B can resume because both are waiting for eachothers locked resources.
+
+Livelock -> when 2 processes keep running cause both processes have a locked resource the other needs
+
+Starvation -> when a process is unable to get hold of a resource and cant resume
+
+
+----------------
+ BITS AND BYTES
+----------------
+
+BINARY BASE
+-----------
+
+16 bit integer(signed): ranges from -(2^(n-1)) to 2^(n-1) - 1 -> -32768 to 23767
+16 bit integer(unsigned): ranges from 0 to |2^n - 1 -> 2^16 - 1| -> 0 to 65535
+
+
+OCTAL BASE
+----------
+
+0413 = 100.001.011
+
+0413 = 4*8^2 + 1*8^1 + 3*8^0
+
+0413 = 267
+
+
+HEX BASE
+--------
+
+0xAE8 = 1010.1110.1000
+
+0xAE8 = 10*16^2 + 14*16^1 + 8*16^0
+
+0xAE8 = 3016
+
+
+BIT FIELDS
+----------
+struct fields{
+    int two_bit_int:2;  // ranges from -2 -> 1
+    unsigned int u_four_bit_int:4;  // ranges from 0 -> 15
+};
+
+
+NOT ~
+-----
+
+~101000   = 010111
+
+~07245(8) = 111.010.100.101 = 000.101.011.010 = 0532 
+
+~0xADC27  = 1010.1101.1100.0010.0111 = 0101.0010.0011.1101.1000 = 0x523D8
+
+
+
+------------
+ DATA TYPES
+------------
+
+
+C89/C90 -> char,int,float,double,short
+C99 -> long long
+User Defined -> typedef,struct,enum,union
+Derived Types -> arrays,pointer,func. pointer
+
+
+char >= 8bit 1byte
+short >= 16bit 2bytes
+int >= 16bit 2bytes
+long >= 32bit 4bytes
+float >= size of char
+double >= size of float
+long double >= size of double
+long long >= size of long
+
+char <= short <= int <= long <= long long
+char <= float <= double <= long double
+
+intmax_t, capable of representing any integer of any signed integer type
+uintmax_t, capable of representing any unsinged integer of any unsinged integer type
+
+size_t, return of sizeof(), represents the max size of any data type, max value is store is SIZE_MAX <stdint.h>
+
+ptrdiff_t, difference(subtraction) between 2 pointers
+
+
+---------------------
+ DATA REPRESENTATION
+---------------------
+
+The message sent from the client to the server has to be "serializada(linearizada)", flattened
+
+On the client end, marshalling happens, data is flattened
+On the server end, unmarshalling happens and data is reconstructed
+
+------------
+|ENDIANNESS|
+------------
+
+Big Endian -> most important byte comes first
+Little Endian -> least important byte comes last
+Bi-Endian -> supports both little and big endian
+
+Little to Big endian: 0x123456 -> 0x563412
+Big to Little endian: 0xFEFAFC -> 0xFCFAFE
+
+BYTE ORDER MARKER
+-----------------
+BOM example: 0xFEFF
+
+If the machine on the receiving end reads the BOM as 0xFEFF the architecture is the same, if it is read as 0xFFFE bytes have to be switched.
+
+BOM is used in UTF16 and UTF 32
+
+ASCII
+-----
+
+7bits 128 chars
+
+8bits 256 chars: From 128 to 255 is language specific (PT: ç , ã , é ... )
+
+Control Chars: 0 - 31
+Visible Chars: 31 - 127
+Extended Charset: 128 - 255
+
+ISO 8859 - introduced western/occident alphabets
+
+UNICODE
+-------
+U+<hex value>
+Range: U+0x000000 -> U+0x10FFFF
+
+U+12ca = 0x12CA
+
+Divided in, 0 to 16, 17 planes, each with 0xFFFF(65536) number of chars:
+
+0x000000 -> 0x00FFFF, BMP, basic multilingual plane
+0x010000 -> 0x01FFFF, SMP, supplementary multilingual plane, EMOJIs
+0x020000 -> 0x02FFFF ...
+0x030000 -> 0x03FFFF ..
+..
+.
+
+EMOJIs: 1F600 - 1F64F
+
+
+UTF-32
+------
+4 bytes(32 bits)
+
+4 bytes per char
+Not portable due to endianess
+Not used much
+
+
+UTF-16
+------
+2/4 bytes (depends on the character)
+
+BMP is direct, 16 bits are used, 0x0000, BMP goes from 0x0000 to 0xFFFF
+All other planes 32 bits are used 0x000000
+
+
+To determine endianess, 2 first bytes are 0xFFEF if BOM doesnt exit then it is big endian.
+
+
+UTF-8
+-----
+No endianess problems
+Compatible with ascii 7bits,(1 byte) 0xxxxxxx, 128 possible values
+
+>=2 bytes
+0x10 -> "octeto de continuacao"
+
+                                            Range:
+2bytes: 110xxxxx 10xxxxxx                        0x80    to  0x7FF
+3bytes: 1110xxxx 10xxxxxx 10xxxxxx               0x800   to  0xFFFF
+4bytes: 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx      0x10000 to  0x1FFFFF
+
+To get Ω = U+03A9, 0x3A9 in UTF-8:
+
+Ω is in the 2 byte range
+
+3 -> 0011
+A -> 1010
+9 -> 1001
+
+11001110 10101001
+
+
+To get U+15C8, 0x15C8 in UTF-8:
+
+0x15C8 is in the 3 byte range
+
+1 -> 0001
+5 -> 0101
+C -> 1100
+8 -> 1000
+
+11100001 10010111 10001000
+
+
+PUNYCODE
+--------
+Prefix "XN--"
+
+Used for internet host names
+
+
+MIDDLEWARE
+----------
+Interface between apps and OS
+
+Objectives: portability to other OSs
+            eliminate heterogeneity
+

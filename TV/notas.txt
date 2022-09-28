@@ -1,0 +1,22 @@
+--> Cap. 6 - Hardware virtual
+
+	-CPU virtual(vCPU):
+		Oversubscription: quando se alocam mais vCPUs que a 
+		quantidade de pCPUs disponíveis (cores, Hyper threading).
+
+		CPU hot-plugging: significaria que um CPU poderia ser 
+		encaixado ou removido com a máquina ligada.
+
+		
+	-Memória virtual:
+		~O hypervisor fornece acesso à memória a todos os guests
+		~Cada VM recebe uma fatia de memória física no host
+	
+		
+		Ballooning: processo existente nos hypervisores para 
+		evitar a perda de dados.
+	
+	
+	-Storage virtual:
+	
+	-Rede virtual:

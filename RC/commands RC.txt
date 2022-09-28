@@ -1,0 +1,54 @@
+
+/\/\/COMANDOS REDES\/\/\
+
+Pequisa:
+	>show ip int brief
+	>show ipv6 int brief
+	>show history
+	>show running-config
+	>show startup-config
+	>show hosts
+	>show ip route
+
+Personalizacao:
+	>hostname <RC_PL07>
+	>banner motd c <Router PL07 LRSC> c
+	>clock set <17:28:00 17 september 2019>
+	>copy running-config startup-config
+	>reload
+
+Passwords:
+	>line console 0 --> password <cisco> --> login –-> end 
+	>line vty 0 14 --> password <cisco> --> login --> end
+	>enable secret <class>
+	>service password-encryption
+
+Acesso/Interfaces:
+	>en
+	>conf t
+	>int serial / fa / vlan
+	>router rip
+
+ipv4:
+	>ip address <ip> <mask> 
+	>no shutdown
+	>description <informação>
+	>clock rate 56 000 (no router com DCE)
+	
+ipv6:			"para unique"		"para global"
+	>interface 	<fa0/1> 		<serial 0/0/0> 
+	>ipv6 address 	<fc00:(a)::/64 eui-64> 	<2000::(1)/64 eui-64> 
+	>no shutdown
+	>exit
+	>ipv6 unicast-routing
+	>ipv6 route ::/0 serial 0/0/0
+
+NOTAS EXTRA:
+
+	ºPara colocar o cabo SERIAL DCE:
+		1)Desligar router
+		2)colocar o modulo HWIC-2T
+	ºEm caso do terminal esta STUCK:
+		1)CTRL+SHIFT+6
+
+	

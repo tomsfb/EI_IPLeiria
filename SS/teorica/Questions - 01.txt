@@ -1,0 +1,13 @@
+Review Questions
+
+1. What is the OSI security architecture?
+
+2. List and briefly define the three key objectives of computer security.
+
+3. List and briefly define categories of passive and active security attacks.
+
+4. List and briefly define categories of security services.
+
+5. List and briefly define categories of security mechanisms.
+
+6. Explain what is an attack surface.
