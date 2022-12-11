@@ -1,0 +1,113 @@
+
+### NOTAS TESTE TEORICO ###
+
+------------------------ 1. Software-Defined Networking( SDN ) ------------------------------
+
+Surgiu associado a uma questao de equipamentos de rede serem programados
+
+Questoes:
+- Será possivel introduzir uma capacidade semelhante a uma capacidade de programacao pura no
+ambiente de networking?
+- Se eu tiver um grau de libredade muito superior e eu tiver uma capacidade de programacao
+num ambiente tradicional de IT? 
+
+E no fundo haver uma separacao na parte de controlo e na parte de separacao de trafego 
+portanto o control plane e o forwarding plane 
+
+control plane --> correr protocolos de routing no ambiente de redes. Sao pacotes que sao 
+trocados que seguem umas normas definidas pelos protocolos que nos permite por ex. popular 
+as tabelas de routing as tabelas de forwarding por ai fora. 
+
+forwarding plane --> plano de encaminhamento é o que nos interessa nós queremos esta panóplia
+de protocolos e configuramos mas no fundo o nosso objetivo é que o trafego siga o melhor 
+caminho ou que siga no ambiente privado com VPNs ou serviços semelhantes 
+
+O SDN vem separar completamente o control plane e forwarding plane (decoupling) vamos ter um 
+control plane centralizado um control plane distribuido. Permite que o network control seja 
+diretamente programável, ou seja, eu posso ir além do que os protocolos normais me permitem
+e decidir por ex. nao quero fazer isto baseado a tomar o encaminhamento OSPF ou BGP mas a 
+basear num outro parametro qualquer. Este network control tem visibilidade total é como se
+fosse um grande cerebro decidindo assim como é que ser programava criando esta abstracao da
+rede. 
+
+Surge para operacionalizar o SDN surge um protocolo que é o OpenFlow (OF) vai permitir criar
+a comunicacao entre o control layer e forwarding layer.
+
+Application Layer --> pode ser um serviço web, um serviço de video, uma aplicacao expecifica
+
+Control Layer --> é onde defino os serviços de redes
+
+Infrastructure Layer --> seram os routers que será um ambiente menos inteligente
+
+APIs --> há um requesito qualquer numa aplicacao de serviço de cima através de um API ele faz
+um pedido nesta control layer e este control layer e esta toma essa decisão sobre o que é 
+preciso configurar na Infrastructure layer e através do OpenFlow vai fazer essa programacao
+
+
+SDN é:
+- Programmatically Configured --> ter algoritmia que eu nao tenho tradicionalmente nos 
+equipamentos de rede.
+
+- Open Standard --> ou seja, se houver alguem que que decida criar um control layer deverá
+interagir com equipamentos da camada de infras-estruturas de varios vendedores desde que 
+implemente protocolos Standard
+
+- Centrally managed --> está centralizado nos controladores SDN pode ser um ou mais para haver
+redundancia por norma há redundancia
+
+- Agile --> nao está limitado a protocolos ou a requisitos que estao definidos 
+
+- Directly Programmable -->  SDN vem separar completamente o control plane e forwarding plane 
+(decoupling) vamos ter um control plane centralizado um control plane distribuido.
+
+
+OpenFlow comunica entre a camada de Control Layer e Infrastructure Layer 
+
+Beneficios do OpenFlow:
+- Programmability --> novas funcionalidades e serviços
+- Centralized intelligence --> simplifica a provisao dos proprios serviços, otimiza a 
+performace e tem uma politica de gestao mais granulada porque posso ter a definicao que 
+eu quiser.
+- Abstraction --> decoupling
+
+
+SDN controller --> situa-se na Control Layer
+
+OpenDaylight (ODL) --> é um controlador SDN. O seu foco é na programacao de rede. Suporta o 
+OF mas tambem outro tipo de API's que respondem a problemas tipo clustering e alta 
+disponibilidade.
+
+Open vSwitch (OVS) --> situa-se na Infrastructure Layer. É um multilayer virtual switch 
+opensource que nos permita fazer comunicacao entre sistemas virtualizados. 
+Arquitetura: Security, Monitoring, QoS e Automated Control
+
+OVS concepts:
+- tem ports 
+- um porto pode ter 1 ou mais interfaces (bounding)
+- os pacotes sao encaminhados por fluxos
+
+Encaminhamento de fluxos como é feito:
+1. The first packet of a flow is sent to the controller
+2. The controller programs the datapath’s actions for a flow
+    • Usually one, but may be a list
+    • Actions include:
+        • Forward to a port or ports, mirror
+        • Encapsulate and forward to controller
+        • Drop
+3. And returns the packet to the datapath
+4. Subsequent packets are handled directly by the datapath
+
+
+
+--------------------------- 2. Introducao ao Openstack ------------------------------------
+
+Openstack é um software opensource em que a ideia é criar clouds publicas ou privadas ou 
+mistas. Vai ser software que vai correr em servidores (IaaS - Infrastructure as a Service). 
+Simples implementacao, muito escalavel e grande capacidade de funcionalidades.
+
+
+
+-------------------------- 4. Openstack: Arquitetura e Operacao ---------------------------
+
+
+
